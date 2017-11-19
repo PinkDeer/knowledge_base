@@ -15,16 +15,6 @@ class ArticlesController < ApplicationController
     authorize @article
   end
 
-  # def create
-  #   @article = Article.new(article_params)
-  #   if @article.save
-	# 		redirect_to @article
-	# 	else
-	# 		render 'new'
-	# 	end
-  # end
-
-
   def create
       @article = Article.new(article_params)
       @article.user = current_user
@@ -32,7 +22,7 @@ class ArticlesController < ApplicationController
 
       respond_to do |format|
         if @article.save
-          format.html { redirect_to @article, notice: 'Article was successfully created.' }
+          format.html { redirect_to @article, success: 'Article was successfully created.' }
           format.json { render :show, status: :created, location: @article }
         else
           format.html { render :new }
@@ -48,7 +38,7 @@ class ArticlesController < ApplicationController
   def update
     respond_to do |format|
       if @article.update(article_params)
-        format.html { redirect_to @article, notice: 'Article was successfully updated.' }
+        format.html { redirect_to @article, success: 'Article was successfully updated.' }
         format.json { render :show, status: :ok, location: @article }
       else
         format.html { render :edit }
@@ -57,26 +47,13 @@ class ArticlesController < ApplicationController
     end
   end
 
-  # def update
-  #   if @article.update(article_params)
-  #     redirect_to @article
-  #   else
-  #     render 'edit'
-  #   end
-  # end
-
   def destroy
     @article.destroy
     respond_to do |format|
-      format.html { redirect_to articles_url, notice: 'Article was successfully destroyed.' }
+      format.html { redirect_to articles_url, success: 'Article was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
-
-  # def destroy
-  #   @article.destroy
-	# 	redirect_to root_path
-  # end
 
   private
 
@@ -85,16 +62,8 @@ class ArticlesController < ApplicationController
       authorize @article
     end
 
-    # def find_article
-    #   @article = Article.find(params[:id])
-    # end
-
     def article_params
       params.require(:article).permit(:title, :content)
     end
-
-    # def article_params
-    #   params.require(:article).permit(:title, :content)
-    # end
 
 end
