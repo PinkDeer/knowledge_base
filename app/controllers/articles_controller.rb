@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
 
-  before_action :find_article, only: [:show, :edit, :update, :destroy]
+  before_action :find_article, only: [:show, :edit, :update, :destroy, :upvote, :downvote]
 
   def index
     @articles = Article.all
@@ -17,21 +17,20 @@ class ArticlesController < ApplicationController
   end
 
   def create
-      @article = Article.new(article_params)
-      @article.user = current_user
-      authorize @article
+    @article = Article.new(article_params)
+    @article.user = current_user
+    authorize @article
 
-      respond_to do |format|
-        if @article.save
-          format.html { redirect_to @article, success: 'Article was successfully created.' }
-          format.json { render :show, status: :created, location: @article }
-        else
-          format.html { render :new }
-          format.json { render json: @article.errors, status: :unprocessable_entity }
-        end
+    respond_to do |format|
+      if @article.save
+        format.html { redirect_to @article, success: 'Article was successfully created.' }
+        format.json { render :show, status: :created, location: @article }
+      else
+        format.html { render :new }
+        format.json { render json: @article.errors, status: :unprocessable_entity }
       end
     end
-
+  end
 
   def edit
   end
@@ -55,6 +54,23 @@ class ArticlesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def upvote
+    @article.upvote_from current_user
+    respond_to do |format|
+      format.html { redirect_to @article }
+      format.json { render :show, status: :ok, location: @article }
+    end
+	end
+
+	def downvote
+    @article.downvote_from current_user
+    respond_to do |format|
+      format.html { redirect_to @article }
+      format.json { render :show, status: :ok, location: @article }
+    end
+
+	end
 
   private
 

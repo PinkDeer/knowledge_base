@@ -15,6 +15,14 @@ class ArticlePolicy < ApplicationPolicy
     return true if user.present? && user == article.user
   end
 
+  def upvote?
+    user.present?
+  end
+
+  def downvote?
+    user.present?
+  end
+
   private
 
     def article

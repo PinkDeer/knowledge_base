@@ -14,6 +14,7 @@ gem 'better_errors',  '2.4'
 gem 'devise',         '4.3'
 gem 'pundit',         '1.1'
 gem 'trix',           '0.11.0'
+gem 'acts_as_votable','0.11.1'
 
 group :development, :test do
   gem 'sqlite3',      '1.3.13'

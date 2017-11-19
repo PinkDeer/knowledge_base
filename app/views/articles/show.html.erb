@@ -1,5 +1,11 @@
 <h1><%= @article.title %></h1>
 <p><%= @article.content.html_safe %></p>
+<%= @article.get_upvotes.size %>
+Likes
+<%= @article.get_downvotes.size %>
+Dislikes
+<%= link_to "Like", like_article_path(@article), method: :get %>
+<%= link_to "Dislike", dislike_article_path(@article), method: :get %>
 <hr>
 
 <div>
