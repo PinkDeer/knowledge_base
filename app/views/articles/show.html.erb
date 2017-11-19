@@ -1,6 +1,13 @@
 <h1><%= @article.title %></h1>
 <p><%= @article.content %></p>
 
+<div>
+  <h2><%= @article.comments.count %></h2>
+  <%= render @article.comments %>
+  <h3>Reply to thread</h3>
+	<%= render "comments/form" %>
+</div>
+
 <div class="btn-group">
   <%= link_to 'Back', root_path, class: "btn btn-default" %>
   <%= link_to "Edit", edit_article_path(@article), class: "btn btn-default"%>
