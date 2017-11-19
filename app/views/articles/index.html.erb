@@ -4,5 +4,6 @@
 	<%= article.created_at.strftime('%b %d, %Y') %>
   by
   <%= article.user.email %></p>
+  <p><%= article.comments.count %> Comments</p>
   <hr>
 <% end %>
