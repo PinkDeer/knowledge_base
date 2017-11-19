@@ -1,6 +1,6 @@
 <% @articles.each do |article| %>
   <h2><%= link_to article.title, article %></h2>
-  <p><%= truncate(article.content.html_safe, length: 300) %></p>
+  <p><%= truncate(article.content.html_safe, length: 600) %></p>
   <p>	Published at
 	<%= article.created_at.strftime('%b %d, %Y') %>
   by
