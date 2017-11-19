@@ -1,10 +1,12 @@
 <% @articles.each do |article| %>
   <h2><%= link_to article.title, article %></h2>
+  <p><%= truncate(article.content.html_safe, length: 300) %></p>
   <p>	Published at
 	<%= article.created_at.strftime('%b %d, %Y') %>
   by
   <%= article.user.name %></p>
-  <p><%= article.comments.count %> Comments</p>
-  <p><%= article.get_likes.size %> Likes <%= article.get_dislikes.size %> Dilikes</p>
+  <p><%= article.comments.count %> <i class="fa fa-comment-o" aria-hidden="true"></i>
+  <%= article.get_likes.size %> <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+  <%= article.get_dislikes.size %> <i class="fa fa-thumbs-o-down" aria-hidden="true"></i></p>
   <hr>
 <% end %>

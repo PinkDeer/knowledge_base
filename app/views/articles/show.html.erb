@@ -1,28 +1,37 @@
 <h1><%= @article.title %></h1>
 <p><%= @article.content.html_safe %></p>
-<%= @article.get_upvotes.size %>
-Likes
-<%= @article.get_downvotes.size %>
-Dislikes
-<%= link_to "Like", like_article_path(@article), method: :get %>
-<%= link_to "Dislike", dislike_article_path(@article), method: :get %>
+
+<%= link_to like_article_path(@article), method: :get, class: "data" do %>
+	<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+	<%= pluralize(@article.get_upvotes.size, "Like") %>
+<% end %>
+<%= link_to dislike_article_path(@article), method: :get, class: "data" do %>
+	<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+	<%= pluralize(@article.get_downvotes.size, "Dislike") %>
+<% end %>
+<br>
+<div class="btn-group">
+  <% if user_signed_in? %>
+    <%= link_to 'Back', root_path, class: "btn btn-primary" %>
+    <%= link_to "Edit", edit_article_path(@article), class: "btn btn-primary"%>
+    <%= link_to "Delete", article_path(@article), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-primary" %>
+  <% else %>
+    <%= link_to 'Back', root_path, class: "btn btn-primary" %>
+  <% end %>
+</div>
+
 <hr>
 
 <div>
   <h3><%= pluralize(@article.comments.count, "Comment")  %></h3>
 	<% @comments.each do |comment| %>
 		<div>
-			<p><%= comment.user.name %></p>
-			<p><%= comment.comment %></p>
+			<p><%= comment.user.name %>:
+			<%= comment.comment %></p>
       <!-- <%=  link_to "Edit", edit_article_comment_path(comment.article, comment) %>
       <%= link_to "Delete", [comment.article, comment], method: :delete, data: { confirm: "Are you sure?" } %> -->
+      <hr>
     </div>
   <% end %>
 	<%= render "comments/form" %>
-</div>
-
-<div class="btn-group">
-  <%= link_to 'Back', root_path, class: "btn btn-default" %>
-  <%= link_to "Edit", edit_article_path(@article), class: "btn btn-default"%>
-  <%= link_to "Delete", article_path(@article), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-default" %>
 </div>
